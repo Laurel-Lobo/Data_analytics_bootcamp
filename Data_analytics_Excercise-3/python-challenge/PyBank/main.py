@@ -1,13 +1,12 @@
 import os
 import csv
 
-bankPath = os.path.join("budget_data.csv")
 bankData = []
 months = []
 profitsLosses = []
 AvgChange = 0
 
-with open(bankPath, 'r', newline = "", encoding = 'utf-8') as bankFile:
+with open("budget_data.csv", 'r', newline = "", encoding = 'utf-8') as bankFile:
     bankReader = csv.reader(bankFile, delimiter = ",")
     next(bankReader, None)
     
