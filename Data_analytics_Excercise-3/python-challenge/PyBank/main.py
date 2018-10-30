@@ -49,10 +49,10 @@ with open(bankPath, 'r', newline = "", encoding = 'utf-8') as bankFile:
     
     #print to output file
     with open ("FinancialAnalysis.txt", "w") as file:
-        file.write("Financial Analysis \n")
-        file.write("---------------------------- \n")
-        file.write(f"Total Months: {TMonths} \n")
-        file.write(f"Total: ${Total} \n")
-        file.write(f"Average Change: ${CumChange} \n")
-        file.write(f"Greatest Increase in Profits: {MonthMax} (${Max}) \n")
-        file.write(f"Greatest Decrease in Profits: {MonthMin} (${Min}) \n")
+        file.write("Financial Analysis\n")
+        file.write("----------------------------\n")
+        file.write(f"Total Months: {TMonths}\n")
+        file.write(f"Total: ${Total}\n")
+        file.write(f"Average Change: ${CumChange}\n")
+        file.write(f"Greatest Increase in Profits: {MonthMax} (${Max})\n")
+        file.write(f"Greatest Decrease in Profits: {MonthMin} (${Min})\n")
