@@ -29,7 +29,6 @@ with open ("election_data.csv", "r", newline = "") as electionFile:
     Winner = max(CandResults, key = CandResults.get)
     
     #prints output
-    
     print("Election Results")
     print("-------------------------")
     print(f"Total Votes: {TotalVotes}")
