@@ -11,7 +11,7 @@ with open("paragraph_2.txt", 'r', newline = '') as para:
             letterCount += 1
     
     wordCount = len(re.split(r' ', paraReader))
-    sentenceCount = paraReader.count('.')
+    sentenceCount = paraReader.count('.') + paraReader.count('?') + paraReader.count('!')
     sentenceLength = round((wordCount / sentenceCount), 1)
     letterWordCount = round((letterCount / wordCount), 1)
     
