@@ -22,7 +22,6 @@ with open("paragraph_1.txt", 'r') as para:
         if "." in word and len(word) == 2:
             sentenceCount -= 1
             
-    #wordCount = len(re.split(r' ', paraReader))
     sentenceCount += paraReader.count('.') + paraReader.count('?') + paraReader.count('!')
     
     sentenceLength = round((wordCount / sentenceCount), 1)
