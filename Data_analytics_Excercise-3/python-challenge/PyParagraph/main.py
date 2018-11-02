@@ -1,6 +1,8 @@
 import os
 import re
 
+# change file name as needed
+
 with open("paragraph_1.txt", 'r') as para:
     
     paraReader = para.read()
