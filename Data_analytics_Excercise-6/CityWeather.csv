@@ -1,4 +1,4 @@
-City,Cloudiness (%),Country,Date,Humidity (%),Latitude,Longitude,Max Temperate (F),Wind speed (mph)
+City,Cloudiness (%),Country,Date,Humidity (%),Latitude,Longitude,Max Temperature (F),Wind speed (mph)
 Saint-Leu,40,RE,1544405400,57,-21.15,55.28,77.0,8.05
 Barrow,0,AR,1544406238,32,-38.31,-60.23,68.27,9.53
 Ponta do Sol,12,BR,1544406239,84,-20.63,-46.0,64.81,8.19
