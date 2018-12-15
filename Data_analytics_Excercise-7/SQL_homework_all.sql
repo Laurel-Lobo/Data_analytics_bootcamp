@@ -205,10 +205,12 @@ ORDER BY `Rental count` DESC;
 SELECT store.store_id AS `Store ID`
 ,CONCAT ('$', FORMAT(SUM(payment.amount), 2)) AS `Total revenue`
 FROM store 
-LEFT JOIN staff
-	INNER JOIN payment
-    ON staff.staff_id = payment.staff_id
-ON store.store_id = staff.store_id
+LEFT JOIN inventory
+	INNER JOIN rental
+		INNER JOIN payment
+        ON rental.rental_id = payment.rental_id
+    ON inventory.inventory_id = rental.inventory_id
+ON store.store_id = inventory.store_id
 GROUP BY store.store_id;
 
 #7g. Write a query to display for each store its store ID, city, and country.
