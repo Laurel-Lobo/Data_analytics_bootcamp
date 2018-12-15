@@ -191,9 +191,14 @@ WHERE category.name = 'Family';
 #7e. Display the most frequently rented movies in descending order.
 
 SELECT film.title AS `Title`
-, film.rental_rate AS `Rental frequency`
+, COUNT(rental.inventory_id) AS `Rental count`
 FROM film
-ORDER BY film.rental_rate DESC;
+LEFT JOIN inventory
+	INNER JOIN rental
+    ON inventory.inventory_id = rental.inventory_id
+ON film.film_id = inventory.film_id
+GROUP BY film.title
+ORDER BY `Rental count` DESC;
 
 #7f. Write a query to display how much business, in dollars, each store brought in.
 
