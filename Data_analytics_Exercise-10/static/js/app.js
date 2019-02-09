@@ -1,4 +1,2 @@
-// from data.js
+//Data import
 var tableData = data;
-
-
