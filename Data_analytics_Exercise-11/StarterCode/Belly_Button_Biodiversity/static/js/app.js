@@ -17,9 +17,8 @@ function buildMetadata(sample) {
 
     //Building gauge
     // buildGauge(data.WFREQ)
-    /*
-    var level = (data.WFREQ)
-
+    var level = (((data.WFREQ) + 1)*18) - 9
+    
     // Trig to calc meter point
     var degrees = 180 - level,
         radius = .5;
@@ -43,17 +42,24 @@ function buildMetadata(sample) {
         name: 'Washing Frequency',
         text: level,
         hoverinfo: 'text+name'},
-      { values: [50/12, 50/12, 50/12, 50/12, 50/12, 50/12, 50],
+      { values: [50/10, 50/10, 50/10, 50/10, 50/10, 50/10, 50/10, 50/10, 50/10, 50/10, 50],
       rotation: 90,
       text: ['9', '8', '7', '6',
                 '5', '4', '3', '2', '1', '0', ''],
       textinfo: 'text',
       textposition:'inside',
-      marker: {colors:['rgba(14, 127, 0, .5)', 'rgba(110, 154, 22, .5)',
-                            'rgba(170, 202, 42, .5)', 'rgba(202, 209, 95, .5)',
-                            'rgba(210, 206, 145, .5)', 'rgba(232, 226, 202, .5)',
-                            'rgba(255, 255, 255, 0)']},
-      labels: ['0', '1', '2', '3','4','5', '6', '7', '8', '9', ''],
+      marker: {colors:['rgb(238, 248, 252)',
+                      'rgb(213, 228, 248)',
+                      'rgb(188, 209, 245)',
+                      'rgb(163, 189, 242)',
+                      'rgb(139, 170, 239)',
+                      'rgb(114, 150, 235)',
+                      'rgb(106, 144, 234)',
+                      'rgb(84, 126, 231)',
+                      'rgb(62, 109, 228)',
+                      'rgb(40, 92, 226)',
+                      'rgb(255, 255, 255)']},
+      labels: ['Nice and clean!', 'Common, just a little more!', 'You can now go to a beach', 'You are now acceptable for a date', 'I hear rubbing alcohol helps', 'You are now allowed outside', 'Scrub harder!', 'start scrubbing', 'Jesus', 'Does your mother know?', ''],
       hoverinfo: 'label',
       hole: .5,
       type: 'pie',
@@ -77,8 +83,7 @@ function buildMetadata(sample) {
     };
 
     Plotly.newPlot('gauge', data, layout);
-  }
-  */
+  //*/
   })};
 
 function buildCharts(sample) {
