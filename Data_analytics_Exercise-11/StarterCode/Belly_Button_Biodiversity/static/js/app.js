@@ -1,30 +1,172 @@
 function buildMetadata(sample) {
 
-  // @TODO: Complete the following function that builds the metadata panel
-
-  // Use `d3.json` to fetch the metadata for a sample
+  // Use `d3.json` to fetch the metadata for a sample from the appropriate route
+  d3.json(`/metadata/${sample}`).then(function (data) {
+    
     // Use d3 to select the panel with id of `#sample-metadata`
+    var metaPanel = d3.select("#sample-metadata")
 
     // Use `.html("") to clear any existing metadata
+    metaPanel.html("")
 
     // Use `Object.entries` to add each key and value pair to the panel
     // Hint: Inside the loop, you will need to use d3 to append new
     // tags for each key-value in the metadata.
+    
+    Object.entries(data).map(([key,value]) => metaPanel.append('p').append('span').text(`${key} : ${value}`))
 
-    // BONUS: Build the Gauge Chart
-    // buildGauge(data.WFREQ);
-}
+    //Building gauge
+    // buildGauge(data.WFREQ)
+    /*
+    var level = (data.WFREQ)
+
+    // Trig to calc meter point
+    var degrees = 180 - level,
+        radius = .5;
+
+    var radians = degrees * Math.PI / 180;
+    var x = radius * Math.cos(radians);
+    var y = radius * Math.sin(radians);
+
+    var mainPath = 'M -.0 -0.025 L .0 0.025 L ',
+        pathX = String(x),
+        space = ' ',
+        pathY = String(y),
+        pathEnd = ' Z';
+
+    var path = mainPath.concat(pathX,space,pathY,pathEnd);
+
+    var data = [{ type: 'scatter',
+      x: [0], y:[0],
+        marker: {size: 28, color:'850000'},
+        showlegend: false,
+        name: 'Washing Frequency',
+        text: level,
+        hoverinfo: 'text+name'},
+      { values: [50/12, 50/12, 50/12, 50/12, 50/12, 50/12, 50],
+      rotation: 90,
+      text: ['9', '8', '7', '6',
+                '5', '4', '3', '2', '1', '0', ''],
+      textinfo: 'text',
+      textposition:'inside',
+      marker: {colors:['rgba(14, 127, 0, .5)', 'rgba(110, 154, 22, .5)',
+                            'rgba(170, 202, 42, .5)', 'rgba(202, 209, 95, .5)',
+                            'rgba(210, 206, 145, .5)', 'rgba(232, 226, 202, .5)',
+                            'rgba(255, 255, 255, 0)']},
+      labels: ['0', '1', '2', '3','4','5', '6', '7', '8', '9', ''],
+      hoverinfo: 'label',
+      hole: .5,
+      type: 'pie',
+      showlegend: false
+    }];
+
+    var layout = {
+      shapes:[{
+          type: 'path',
+          path: path,
+          fillcolor: '850000',
+          line: {
+            color: '850000'
+          }
+        }],
+      title: 'Washing Frequency',
+      xaxis: {zeroline:false, showticklabels:false,
+                showgrid: false, range: [-1, 1]},
+      yaxis: {zeroline:false, showticklabels:false,
+                showgrid: false, range: [-1, 1]}
+    };
+
+    Plotly.newPlot('gauge', data, layout);
+  }
+  */
+  })};
 
 function buildCharts(sample) {
 
-  // @TODO: Use `d3.json` to fetch the sample data for the plots
+  // Setting the url for data fetch
+  var samples = `/samples/${sample}`
+  
+  //Obtaining the values from the url and pushing into a new array 
+  d3.json(samples).then(function (sampleData) {
+    
+    //Extract values and store in new array
+    var sample_values=sampleData.sample_values
+    var otu_ids=sampleData.otu_ids
+    var otu_labels=sampleData.otu_labels
 
-    // @TODO: Build a Bubble Chart using the sample data
+    //create new JSON of sample data as a mirror of the url data
+    
+    var len = sample_values.length;
+    var finalSampleData = []
+    
+    for (var i = 0; i < len; i++) {
+      var element = {
+        "sample_values": sample_values[i],
+        "otu_ids": otu_ids[i],
+        "otu_labels": otu_labels[i]
+      };
 
-    // @TODO: Build a Pie Chart
-    // HINT: You will need to use slice() to grab the top 10 sample_values,
-    // otu_ids, and labels (10 each).
-}
+      finalSampleData.push(element);
+    };
+    
+    //Sort, slice and reverse sampleData to get top 10
+    
+    finalSampleData.sort(function(a, b) {
+      return parseFloat(b.sample_values) - parseFloat(a.sample_values);
+    })
+
+    topTen = finalSampleData.slice(0, 10);
+
+
+    topTen = topTen.reverse();
+    
+    //Build a Pie Chart
+    var pieTrace={
+      values: topTen.map(data => data.sample_values),
+      labels: topTen.map(data => data.otu_ids),
+      text: topTen.map(data => data.otu_labels),
+      textinfo: 'percent',
+      type: 'pie',
+      hoverinfo: 'label + percent + text'
+    }
+
+    var pieData = [pieTrace]
+
+    var pieLayout = {
+      title: "Belly Button Microbe Distribution"
+    }
+
+    Plotly.newPlot('pie', pieData, pieLayout)
+    
+    //Build a Bubble Chart
+
+    var bubbleTrace={
+      x: topTen.map(data => data.otu_ids),
+      y: topTen.map(data => data.sample_values),
+      text: topTen.map(data => data.otu_labels),
+      mode: 'markers',
+      marker: {
+        size: topTen.map(data => data.sample_values),
+        color: topTen.map(data => data.otu_ids)
+      },
+      hoverinfo: 'text + x + y'
+    };
+
+    var bubbleData=[bubbleTrace];
+
+    var bubbleLayout={
+      xaxis: {
+        title: "OTU ID"
+      },
+      yaxis: {
+        title: "Count"
+      },
+      autosize: true
+    }
+    
+    Plotly.newPlot('bubble', bubbleData, bubbleLayout);
+  })
+};
 
 function init() {
   // Grab a reference to the dropdown select element
